@@ -28,7 +28,17 @@ This configuration is in development, but will meet the requirements layed out i
  +---------------------------------------+   +---------------------------------------+
 ```
 
-# Config steps
+# Ludus Config Steps
+## Install ansible roles
+### Child domain roles
+
+```git clone https://github.com/ChoiSG/ludus_ansible_roles.git
+cd ludus_ansible_roles
+ludus ansible role add -d ./ludus_child_domain
+ludus ansible role add -d ./ludus_child_domain_join
+```
+
+# Domain Config Steps
 ## MINERAL Parent Domain
 ### PRIMARYDC
 * Setup Domain / Forest
@@ -49,11 +59,11 @@ This configuration is in development, but will meet the requirements layed out i
   * New-AdGroup -Name "Global Group" -GroupScope Global
   * Add-AdGroupMember -Identity 'Global Group' -Members 'alice','bob'
 
-### GRAPHITE Workstation
+### CINNABAR Workstation
 * ADD MACHINE TO MINERAL.LOCAL DOMAIN (Handled by range config??)
 * Add-LocalGroupMember -Group 'Administrators' -Member 'MINERAL\alice'
 
-### CINNABAR Workstation
+### GRAPHITE Workstation
 * ADD MACHINE TO MINERAL.LOCAL DOMAIN (Handled by range config??)
 * Add-LocalGroupMember -Group 'Administrators' -Member 'MINERAL\alice'
 
