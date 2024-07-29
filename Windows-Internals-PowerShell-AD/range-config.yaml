@@ -11,6 +11,48 @@ ludus:
     domain:
       fqdn: mineral.local
       role: primary-dc
+    roles:
+      - ludus-ad-content
+    role_vars:
+      ludus_ad:
+        ous:
+          - name: Dummy
+            path: DC=mineral,DC=local
+            description: dummy ou
+        groups:
+          - name: Local Resource
+            scope: domainlocal
+            path: "DC=mineral,DC=local"
+            description: Local Resource
+          - name: Universal Group
+            scope: universal
+            path: "DC=mineral,DC=local"
+            description: Universal Group
+          - name: Global Group
+            scope: global
+            path: "DC=mineral,DC=local"
+            description: Global Group
+        users:
+          - name: alice
+            firstname: Alice
+            surname: Bombas
+            display_name: Alice Bombas
+            password: password1
+            path: "CN=Users,DC=mineral,DC=local"
+            description: IT System Administrator
+            groups:
+              - Local Resource
+              - Global Group
+          - name: bob
+            firstname: Bob
+            surname: Cordite 
+            display_name: Bob Cordite
+            password: password2
+            path: "CN=Users,DC=mineral,DC=local"
+            description: CEO
+            groups:
+              - Universal Group
+              - Global Group
   - vm_name: "{{ range_id }}-CINNABAR"
     hostname: "CINNABAR"
     template: win11-22h2-x64-enterprise-template
@@ -46,6 +88,7 @@ ludus:
       sysprep: true
     roles:
       - ludus_child_domain
+      - ludus-ad-content
     role_vars:
       parent_domain_name: "mineral.local"
       new_domain_name: "sales"
@@ -53,6 +96,45 @@ ludus:
       parent_ea_password: "password"
       parent_dc_ip: "10.{{ range_second_octet }}.10.10"
       current_host_ip: "10.{{ range_second_octet }}.10.110"
+      ludus_ad:
+        ous:
+          - name: Dummy
+            path: DC=sales,DC=mineral,DC=local
+            description: dummy ou
+        groups:
+          - name: Field Reps
+            scope: domainlocal
+            path: "DC=sales,DC=mineral,DC=local"
+            description: Field Reps
+          - name: Executives
+            scope: universal
+            path: "DC=sales,DC=mineral,DC=local"
+            description: Executives
+          - name: Sales Group
+            scope: global
+            path: "DC=sales,DC=mineral,DC=local"
+            description: Sales Group
+        users:
+          - name: jan
+            firstname: Jan
+            surname: Brady
+            display_name: Jan Brady
+            password: password3
+            path: "CN=Users,DC=sales,DC=mineral,DC=local"
+            description: VP of Sales
+            groups:
+              - Executives
+              - Sales Group
+          - name: paul
+            firstname: Paul
+            surname: Blart
+            display_name: Paul Blart
+            password: password4
+            path: "CN=Users,DC=sales,DC=mineral,DC=local"
+            description: Mall Sales
+            groups:
+              - Field Reps
+              - Sales Group
   - vm_name: "{{ range_id }}-GOLD"
     hostname: "GOLD"
     template: win11-22h2-x64-enterprise-template
@@ -98,8 +180,49 @@ ludus:
       sysprep: true
     roles:
       - ludus_child_domain_join
+      - ludus-ad-content
     role_vars:
       dc_ip: "10.{{ range_second_octet }}.10.210"
       dns_domain_name: "engineering.mineral.local"
       domain_admin_user: "administrator@engineering.mineral.local"
       domain_admin_password: "password"
+      role_vars:
+      ludus_ad:
+        ous:
+          - name: Dummy
+            path: DC=engineering,DC=mineral,DC=local
+            description: dummy ou
+        groups:
+          - name: Research Devs
+            scope: domainlocal
+            path: "DC=engineering,DC=mineral,DC=local"
+            description: Research Devs
+          - name: Field Repairs
+            scope: universal
+            path: "DC=engineering,DC=mineral,DC=local"
+            description: Field Repairs
+          - name: Smarty Pants
+            scope: global
+            path: "DC=engineering,DC=mineral,DC=local"
+            description: Smarty Pants
+        users:
+          - name: tony
+            firstname: Tony
+            surname: Starck
+            display_name: Tony Stark
+            password: password5
+            path: "CN=Users,DC=engineering,DC=mineral,DC=local"
+            description: Ironman
+            groups:
+              - Research Devs
+              - Smarty Pants
+          - name: tim
+            firstname: Tim
+            surname: Taylor
+            display_name: Tim Taylor
+            password: password4
+            path: "CN=Users,DC=engineering,DC=mineral,DC=local"
+            description: The Tool Man
+            groups:
+              - Field Repairs
+              - Smarty Pants
