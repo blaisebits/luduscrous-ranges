@@ -38,20 +38,25 @@ ludus ansible role add -d ./ludus_child_domain
 ludus ansible role add -d ./ludus_child_domain_join
 ```
 
+### AD Configuration Roles
+```git clone https://github.com/Cyblex-Consulting/ludus-ad-content.git
+ludus ansible role add -d ./ludus-ad-content
+```
+
 # Domain Config Steps
 ## MINERAL Parent Domain
 ### PRIMARYDC
-* Setup Domain / Forest
+* Setup Domain / Forest (DONE)
   * Install-windowsfeature ad-domain-services
   * install-addsforest -domainname mineral.local -domainnetbiosname MINERAL -installdns -force
     * we'll need a way to get a safe mode admin password
   * set-addefaultdomainpasswordpolicy -identity mineral.local -maxpasswordage 0
-* Setup user accounts
+* Setup user accounts (DONE)
   * $pwd1 = Convertto-securestring -string "password1"
   * $pwd2 = Convertto-securestring -string "password2"
   * new-aduser -name alice -country USA -accountpassword $pwd1 -givenname "Alice Bombas" -enabled $true
   * new-aduser -name bob -country JP -accountpassword $pwd2 -givenname "Bob Cordite" -enabled $true
-* Setup Groups and memberships
+* Setup Groups and memberships (DONE)
   * New-AdGroup -Name "Local Resource" -GroupScope DomainLocal
   * Add-AdGroupMember -Identity 'Local Resource' -Members 'alice'
   * New-AdGroup -Name "Universal Group" -GroupScope Universal
@@ -115,7 +120,7 @@ ludus ansible role add -d ./ludus_child_domain_join
   * New-AdGroup -Name "Field Repairs" -GroupScope Universal
   * Add-AdGroupMember -Identity 'Field Repairs' -Members 'tim'
   * New-AdGroup -Name "Smarty Pants" -GroupScope Global
-  * Add-AdGroupMember -Identity 'Sales Group' -Members 'tony','tim'
+  * Add-AdGroupMember -Identity 'Smarty Pants' -Members 'tony','tim'
 
 ### STEEL Workstation
 * ADD MACHINE TO ENGINEERING.MINERAL.LOCAL DOMAIN (Handled by range config??)
