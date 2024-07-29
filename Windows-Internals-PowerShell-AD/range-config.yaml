@@ -7,19 +7,19 @@ ludus:
     ram_gb: 8
     cpus: 4
     windows:
-      sysprep: false
+      sysprep: true
     domain:
       fqdn: mineral.local
       role: primary-dc
   - vm_name: "{{ range_id }}-CINNABAR"
     hostname: "CINNABAR"
-    template: win2022-server-x64-template
+    template: win11-22h2-x64-enterprise-template
     vlan: 10
     ip_last_octet: 20
     ram_gb: 8
     cpus: 4
     windows:
-      sysprep: false
+      sysprep: true
     domain:
       fqdn: mineral.local
       role: member
@@ -31,7 +31,7 @@ ludus:
     ram_gb: 8
     cpus: 4
     windows:
-      sysprep: false
+      sysprep: true
     domain:
       fqdn: mineral.local
       role: member
@@ -43,7 +43,7 @@ ludus:
     ram_gb: 8
     cpus: 4
     windows:
-      sysprep: false
+      sysprep: true
     roles:
       - ludus_child_domain
     role_vars:
@@ -61,7 +61,7 @@ ludus:
     ram_gb: 8
     cpus: 4
     windows:
-      sysprep: false
+      sysprep: true
     roles:
       - ludus_child_domain_join
     role_vars:
@@ -77,7 +77,9 @@ ludus:
     ram_gb: 8
     cpus: 4
     windows:
-      sysprep: false
+      sysprep: true
+    roles:
+      - ludus_child_domain
     role_vars:
       parent_domain_name: "mineral.local"
       new_domain_name: "engineering"
@@ -93,7 +95,7 @@ ludus:
     ram_gb: 8
     cpus: 4
     windows:
-      sysprep: false
+      sysprep: true
     roles:
       - ludus_child_domain_join
     role_vars:
