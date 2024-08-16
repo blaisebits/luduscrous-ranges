@@ -32,13 +32,15 @@ This configuration is in development, but will meet the requirements layed out i
 ## Install ansible roles
 ### Child domain roles
 
-```git clone https://github.com/ChoiSG/ludus_ansible_roles.git
+```
+git clone https://github.com/ChoiSG/ludus_ansible_roles.git
 cd ludus_ansible_roles
 ludus ansible role add -d ./ludus_child_domain
 ludus ansible role add -d ./ludus_child_domain_join
 ```
 
 ### AD Configuration Roles
-```git clone https://github.com/Cyblex-Consulting/ludus-ad-content.git
+```
+git clone https://github.com/Cyblex-Consulting/ludus-ad-content.git
 ludus ansible role add -d ./ludus-ad-content
 ```
