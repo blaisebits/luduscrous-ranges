@@ -133,6 +133,11 @@ ludus:
     cpus: 2
     windows:
       sysprep: true
+    roles:
+      - ludus_foreign_domain
+    role_vars:
+      new_domain_name: "dmz.dmz"
+      new_domain_netbios_name: "dmz"
   - vm_name: "{{ range_id }}-BBI-DMZ-WEB"
     hostname: "{{ range_id }}-BBI-DMZ-WEB"
     template: debian-12-x64-server-template
