@@ -8,6 +8,9 @@ ludus:
     cpus: 2
     windows:
       sysprep: true
+    domain:
+      fqdn: babybottles.inc
+      role: primary-dc
   - vm_name: "{{ range_id }}-BBI-HQ-SQL"
     hostname: "{{ range_id }}-BBI-HQ-SQL"
     template: win2019-server-x64-template
@@ -17,6 +20,9 @@ ludus:
     cpus: 2
     windows:
       sysprep: true
+    domain:
+      fqdn: babybottles.inc
+      role: member
   - vm_name: "{{ range_id }}-BBI-HQ-SQUID"
     hostname: "{{ range_id }}-BBI-HQ-SQUID"
     template: debian-12-x64-server-template
@@ -34,6 +40,9 @@ ludus:
     cpus: 2
     windows:
       sysprep: true
+    domain:
+      fqdn: babybottles.inc
+      role: member
   - vm_name: "{{ range_id }}-BBI-HQ-ES"
     hostname: "{{ range_id }}-BBI-HQ-ES"
     template: win2019-server-x64-template
@@ -43,6 +52,9 @@ ludus:
     cpus: 2
     windows:
       sysprep: true
+    domain:
+      fqdn: babybottles.inc
+      role: member
   - vm_name: "{{ range_id }}-BBI-CORP-DC"
     hostname: "{{ range_id }}-BBI-CORP-DC"
     template: win2019-server-x64-template
@@ -52,6 +64,15 @@ ludus:
     cpus: 2
     windows:
       sysprep: true
+    roles:
+      - ludus_child_domain
+    role_vars:
+      parent_domain_name: "babybottles.inc"
+      new_domain_name: "corp"
+      parent_ea_user: "babybottles.inc\\administrator"
+      parent_ea_password: "password"
+      parent_dc_ip: "10.{{ range_second_octet }}.10.10"
+      current_host_ip: "10.{{ range_second_octet }}.20.10"
   - vm_name: "{{ range_id }}-BBI-CORP-WKSTN1"
     hostname: "{{ range_id }}-BBI-CORP-WKSTN1"
     template: win11-22h2-x64-enterprise-template
@@ -61,6 +82,13 @@ ludus:
     cpus: 2
     windows:
       sysprep: true
+    roles:
+      - ludus_child_domain_join
+    role_vars:
+      dc_ip: "10.{{ range_second_octet }}.20.10"
+      dns_domain_name: "corp.babybottles.inc"
+      domain_admin_user: "administrator@corp.babybottles.inc"
+      domain_admin_password: "password"
   - vm_name: "{{ range_id }}-BBI-CORP-WKSTN2"
     hostname: "{{ range_id }}-BBI-CORP-WKSTN2"
     template: win11-22h2-x64-enterprise-template
@@ -70,6 +98,13 @@ ludus:
     cpus: 2
     windows:
       sysprep: true
+    roles:
+      - ludus_child_domain_join
+    role_vars:
+      dc_ip: "10.{{ range_second_octet }}.20.10"
+      dns_domain_name: "corp.babybottles.inc"
+      domain_admin_user: "administrator@corp.babybottles.inc"
+      domain_admin_password: "password"
   - vm_name: "{{ range_id }}-BBI-RD-DC"
     hostname: "{{ range_id }}-BBI-RD-DC"
     template: win2019-server-x64-template
@@ -79,6 +114,15 @@ ludus:
     cpus: 2
     windows:
       sysprep: true
+    roles:
+      - ludus_child_domain
+    role_vars:
+      parent_domain_name: "corp.babybottles.inc"
+      new_domain_name: "rnd"
+      parent_ea_user: "corp.babybottles.inc\\administrator"
+      parent_ea_password: "password"
+      parent_dc_ip: "10.{{ range_second_octet }}.20.10"
+      current_host_ip: "10.{{ range_second_octet }}.30.10"
   - vm_name: "{{ range_id }}-BBI-RD-SQL"
     hostname: "{{ range_id }}-BBI-RD-SQL"
     template: win2019-server-x64-template
@@ -88,6 +132,13 @@ ludus:
     cpus: 2
     windows:
       sysprep: true
+    roles:
+      - ludus_child_domain_join
+    role_vars:
+      dc_ip: "10.{{ range_second_octet }}.30.10"
+      dns_domain_name: "rnd.corp.babybottles.inc"
+      domain_admin_user: "administrator@rnd.corp.babybottles.inc"
+      domain_admin_password: "password"
   - vm_name: "{{ range_id }}-BBI-RD-WKSTN1"
     hostname: "{{ range_id }}-BBI-RD-WKSTN1"
     template: win11-22h2-x64-enterprise-template
@@ -97,6 +148,13 @@ ludus:
     cpus: 2
     windows:
       sysprep: true
+    roles:
+      - ludus_child_domain_join
+    role_vars:
+      dc_ip: "10.{{ range_second_octet }}.30.10"
+      dns_domain_name: "rnd.corp.babybottles.inc"
+      domain_admin_user: "administrator@rnd.corp.babybottles.inc"
+      domain_admin_password: "password"
   - vm_name: "{{ range_id }}-BBI-SW-DC"
     hostname: "{{ range_id }}-BBI-SW-DC"
     template: win2019-server-x64-template
@@ -106,6 +164,16 @@ ludus:
     cpus: 2
     windows:
       sysprep: true
+    roles:
+      - ludus_foreign_domain
+    role_vars:
+      create_dns_delegation: true
+      new_domain_name: "skunk.works"
+      new_domain_netbios_name: "skunkworks"
+      domain_mode: "WinThreshold"
+      forest_mode: "WinThreshold"
+      reboot: true
+      SafeModeAdministratorPassword: "Password123!"
   - vm_name: "{{ range_id }}-BBI-SW-WKSTN1"
     hostname: "{{ range_id }}-BBI-SW-WKSTN1"
     template: win11-22h2-x64-enterprise-template
@@ -115,6 +183,13 @@ ludus:
     cpus: 2
     windows:
       sysprep: true
+    roles:
+      - ludus_child_domain_join
+    role_vars:
+      dc_ip: "10.{{ range_second_octet }}.40.10"
+      dns_domain_name: "skunk.works"
+      domain_admin_user: "administrator@skunk.works"
+      domain_admin_password: "password"
   - vm_name: "{{ range_id }}-BBI-SW-FS"
     hostname: "{{ range_id }}-BBI-SW-FS"
     template: win2019-server-x64-template
@@ -124,6 +199,13 @@ ludus:
     cpus: 2
     windows:
       sysprep: true
+    roles:
+      - ludus_child_domain_join
+    role_vars:
+      dc_ip: "10.{{ range_second_octet }}.40.10"
+      dns_domain_name: "skunk.works"
+      domain_admin_user: "administrator@skunk.works"
+      domain_admin_password: "password"
   - vm_name: "{{ range_id }}-BBI-DMZ-DC"
     hostname: "{{ range_id }}-BBI-DMZ-DC"
     template: win2019-server-x64-template
@@ -171,90 +253,90 @@ ludus:
     cpus: 4
     windows:
       sysprep: true
-network:
-  external_default: REJECT
-  inter_vlan_default: REJECT
-  rules:
-    - name: Allow VLAN 200 out to internet
-      vlan_src: 200
-      vlan_dst: public
-      protocol: all
-      ports: all
-      action: ACCEPT
-    - name: Only allow TCP 80 from VLAN 200 to VLAN 100
-      vlan_src: 200
-      vlan_dst: 100
-      protocol: tcp
-      ports: 80
-      action: ACCEPT
-    - name: Only allow TCP 443 from VLAN 200 to VLAN 100
-      vlan_src: 200
-      vlan_dst: 100
-      protocol: tcp
-      ports: 443
-      action: ACCEPT
-    - name: Allow all traffic from VLAN 100 to VLAN 200(simulated internet)
-      vlan_src: 100
-      vlan_dst: 200
-      protocol: all
-      ports: all
-      action: ACCEPT
-    - name: Allow SQUID access to VLAN 200(simulated internet)
-      vlan_src: 10
-      ip_last_octet_src: 30
-      vlan_dst: 200
-      protocol: all
-      ports: all
-      action: ACCEPT
-    - name: Allow HQ (10) to CORP (20)
-      vlan_src: 10
-      vlan_dst: 20
-      protocol: all
-      ports: all
-      action: ACCEPT
-    - name: Allow CORP (20) to HQ (10)
-      vlan_src: 20
-      vlan_dst: 10
-      protocol: all
-      ports: all
-      action: ACCEPT
-    - name: Allow HQ (10) to R&D (30)
-      vlan_src: 10
-      vlan_dst: 30
-      protocol: all
-      ports: all
-      action: ACCEPT
-    - name: Allow R&D (30) to HQ (10)
-      vlan_src: 30
-      vlan_dst: 10
-      protocol: all
-      ports: all
-      action: ACCEPT
-    - name: Allow CORP (20) to R&D (30)
-      vlan_src: 20
-      vlan_dst: 30
-      protocol: all
-      ports: all
-      action: ACCEPT
-    - name: Allow R&D (30) to CORP (20)
-      vlan_src: 30
-      vlan_dst: 20
-      protocol: all
-      ports: all
-      action: ACCEPT
-    - name: Allow DMZ DC to CORP DC
-      vlan_src: 100
-      ip_last_octet_src: 10
-      vlan_dst: 20
-      ip_last_octet_dst: 10
-      protocol: all
-      ports: all
-      action: ACCEPT
-    - name: Allow CORP DC to DMZ DC
-      vlan_src: 20
-      ip_last_octet_src: 10
-      vlan_dst: 100
-      ip_last_octet_dst: 10
-      protocol: all
-      ports: all
-      action: ACCEPT
+# network:
+#   external_default: REJECT
+#   inter_vlan_default: REJECT
+#   rules:
+#     - name: Allow VLAN 200 out to internet
+#       vlan_src: 200
+#       vlan_dst: public
+#       protocol: all
+#       ports: all
+#       action: ACCEPT
+#     - name: Only allow TCP 80 from VLAN 200 to VLAN 100
+#       vlan_src: 200
+#       vlan_dst: 100
+#       protocol: tcp
+#       ports: 80
+#       action: ACCEPT
+#     - name: Only allow TCP 443 from VLAN 200 to VLAN 100
+#       vlan_src: 200
+#       vlan_dst: 100
+#       protocol: tcp
+#       ports: 443
+#       action: ACCEPT
+#     - name: Allow all traffic from VLAN 100 to VLAN 200(simulated internet)
+#       vlan_src: 100
+#       vlan_dst: 200
+#       protocol: all
+#       ports: all
+#       action: ACCEPT
+#     - name: Allow SQUID access to VLAN 200(simulated internet)
+#       vlan_src: 10
+#       ip_last_octet_src: 30
+#       vlan_dst: 200
+#       protocol: all
+#       ports: all
+#       action: ACCEPT
+#     - name: Allow HQ (10) to CORP (20)
+#       vlan_src: 10
+#       vlan_dst: 20
+#       protocol: all
+#       ports: all
+#       action: ACCEPT
+#     - name: Allow CORP (20) to HQ (10)
+#       vlan_src: 20
+#       vlan_dst: 10
+#       protocol: all
+#       ports: all
+#       action: ACCEPT
+#     - name: Allow HQ (10) to R&D (30)
+#       vlan_src: 10
+#       vlan_dst: 30
+#       protocol: all
+#       ports: all
+#       action: ACCEPT
+#     - name: Allow R&D (30) to HQ (10)
+#       vlan_src: 30
+#       vlan_dst: 10
+#       protocol: all
+#       ports: all
+#       action: ACCEPT
+#     - name: Allow CORP (20) to R&D (30)
+#       vlan_src: 20
+#       vlan_dst: 30
+#       protocol: all
+#       ports: all
+#       action: ACCEPT
+#     - name: Allow R&D (30) to CORP (20)
+#       vlan_src: 30
+#       vlan_dst: 20
+#       protocol: all
+#       ports: all
+#       action: ACCEPT
+#     - name: Allow DMZ DC to CORP DC
+#       vlan_src: 100
+#       ip_last_octet_src: 10
+#       vlan_dst: 20
+#       ip_last_octet_dst: 10
+#       protocol: all
+#       ports: all
+#       action: ACCEPT
+#     - name: Allow CORP DC to DMZ DC
+#       vlan_src: 20
+#       ip_last_octet_src: 10
+#       vlan_dst: 100
+#       ip_last_octet_dst: 10
+#       protocol: all
+#       ports: all
+#       action: ACCEPT
