@@ -126,7 +126,7 @@ ludus:
       sysprep: true
   - vm_name: "{{ range_id }}-BBI-DMZ-DC"
     hostname: "{{ range_id }}-BBI-DMZ-DC"
-    template: win11-22h2-x64-enterprise-template
+    template: win2019-server-x64-template
     vlan: 100
     ip_last_octet: 10
     ram_gb: 4
@@ -136,8 +136,13 @@ ludus:
     roles:
       - ludus_foreign_domain
     role_vars:
+      create_dns_delegation: true
       new_domain_name: "dmz.dmz"
       new_domain_netbios_name: "dmz"
+      domain_mode: "WinThreshold"
+      forest_mode: "WinThreshold"
+      reboot: true
+      SafeModeAdministratorPassword: "Password123!"
   - vm_name: "{{ range_id }}-BBI-DMZ-WEB"
     hostname: "{{ range_id }}-BBI-DMZ-WEB"
     template: debian-12-x64-server-template
