@@ -31,6 +31,9 @@ ludus:
     ram_gb: 4
     cpus: 2
     linux: true
+    testing:
+      snapshot: false
+      block_internet: false
   - vm_name: "{{ range_id }}-BBI-HQ-SCCM"
     hostname: "{{ range_id }}-BBI-HQ-SCCM"
     template: win2019-server-x64-template
@@ -88,7 +91,7 @@ ludus:
       dc_ip: "10.{{ range_second_octet }}.20.10"
       dns_domain_name: "corp.babybottles.inc"
       domain_admin_user: "administrator@corp.babybottles.inc"
-      domain_admin_password: "password"
+      domain_admin_password: "Password123!"
   - vm_name: "{{ range_id }}-BBI-CORP-WKSTN2"
     hostname: "{{ range_id }}-BBI-CORP-WKSTN2"
     template: win11-22h2-x64-enterprise-template
@@ -104,7 +107,7 @@ ludus:
       dc_ip: "10.{{ range_second_octet }}.20.10"
       dns_domain_name: "corp.babybottles.inc"
       domain_admin_user: "administrator@corp.babybottles.inc"
-      domain_admin_password: "password"
+      domain_admin_password: "Password123!"
   - vm_name: "{{ range_id }}-BBI-RD-DC"
     hostname: "{{ range_id }}-BBI-RD-DC"
     template: win2019-server-x64-template
@@ -120,7 +123,7 @@ ludus:
       parent_domain_name: "corp.babybottles.inc"
       new_domain_name: "rnd"
       parent_ea_user: "corp.babybottles.inc\\administrator"
-      parent_ea_password: "password"
+      parent_ea_password: "Password123!"
       parent_dc_ip: "10.{{ range_second_octet }}.20.10"
       current_host_ip: "10.{{ range_second_octet }}.30.10"
   - vm_name: "{{ range_id }}-BBI-RD-SQL"
@@ -138,7 +141,7 @@ ludus:
       dc_ip: "10.{{ range_second_octet }}.30.10"
       dns_domain_name: "rnd.corp.babybottles.inc"
       domain_admin_user: "administrator@rnd.corp.babybottles.inc"
-      domain_admin_password: "password"
+      domain_admin_password: "Password123!"
   - vm_name: "{{ range_id }}-BBI-RD-WKSTN1"
     hostname: "{{ range_id }}-BBI-RD-WKSTN1"
     template: win11-22h2-x64-enterprise-template
@@ -154,7 +157,7 @@ ludus:
       dc_ip: "10.{{ range_second_octet }}.30.10"
       dns_domain_name: "rnd.corp.babybottles.inc"
       domain_admin_user: "administrator@rnd.corp.babybottles.inc"
-      domain_admin_password: "password"
+      domain_admin_password: "Password123!"
   - vm_name: "{{ range_id }}-BBI-SW-DC"
     hostname: "{{ range_id }}-BBI-SW-DC"
     template: win2019-server-x64-template
@@ -189,7 +192,7 @@ ludus:
       dc_ip: "10.{{ range_second_octet }}.40.10"
       dns_domain_name: "skunk.works"
       domain_admin_user: "administrator@skunk.works"
-      domain_admin_password: "password"
+      domain_admin_password: "Password123!"
   - vm_name: "{{ range_id }}-BBI-SW-FS"
     hostname: "{{ range_id }}-BBI-SW-FS"
     template: win2019-server-x64-template
@@ -205,7 +208,7 @@ ludus:
       dc_ip: "10.{{ range_second_octet }}.40.10"
       dns_domain_name: "skunk.works"
       domain_admin_user: "administrator@skunk.works"
-      domain_admin_password: "password"
+      domain_admin_password: "Password123!"
   - vm_name: "{{ range_id }}-BBI-DMZ-DC"
     hostname: "{{ range_id }}-BBI-DMZ-DC"
     template: win2019-server-x64-template
@@ -233,6 +236,9 @@ ludus:
     ram_gb: 4
     cpus: 2
     linux: true
+    testing:
+      snapshot: false
+      block_internet: false
   - vm_name: "{{ range_id }}-kali"
     hostname: "{{ range_id }}-kali"
     template: kali-x64-desktop-template
