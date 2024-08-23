@@ -1,9 +1,5 @@
 Range configuration for use with James Forshaw's book [Windows Security Internals](https://nostarch.com/windows-security-internals)
 
-This configuration is in development, but will meet the requirements layed out in Appendix A.
-
-**THIS LAB IS IN DEVELOPMENT AND NOT CURRENTLY FUNCTIONAL**
-
 # LAB DIAGRAM
 ```
                        +---------------------------------------+                      
@@ -32,15 +28,30 @@ This configuration is in development, but will meet the requirements layed out i
 ## Install ansible roles
 ### Child domain roles
 
-```
-git clone https://github.com/ChoiSG/ludus_ansible_roles.git
+```shell
+git clone https://github.com/BlaiseBits/ludus_ansible_roles.git
 cd ludus_ansible_roles
 ludus ansible role add -d ./ludus_child_domain
 ludus ansible role add -d ./ludus_child_domain_join
 ```
 
 ### AD Configuration Roles
-```
+```shell
 git clone https://github.com/Cyblex-Consulting/ludus-ad-content.git
 ludus ansible role add -d ./ludus-ad-content
+```
+
+### Build the lab
+```shell
+git clone https://github.com/blaisebits/luduscrous-ranges.git
+cd luduscrous-ranges/Windows-Internals-PowerShell-AD
+ludus range config set -f range-config.yaml
+
+# Deploy just the VMs and range router
+# This will help reduce errors when deploying the full range
+ludus range deploy -t network,vm-deploy
+
+# Watch the ludus range logs till deploy finished before proceeding
+# Deploy the full range
+ludus range deploy
 ```
