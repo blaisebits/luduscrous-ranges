@@ -91,7 +91,7 @@ ludus:
       - name: ludus_child_domain
         depends_on:
           - vm_name: "{{ range_id }}-PRIMARYDC"
-            role: microsoft.ad.domain
+            role: ludus-ad-content
       - ludus-ad-content
     role_vars:
       parent_domain_name: "mineral.local"
