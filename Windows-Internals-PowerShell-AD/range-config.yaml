@@ -88,11 +88,15 @@ ludus:
       sysprep: true
     roles:
       # - ludus_child_domain
+      # - ludus-ad-content
       - name: ludus_child_domain
         depends_on:
           - vm_name: "{{ range_id }}-PRIMARYDC"
             role: ludus-ad-content
-      - ludus-ad-content
+      - name: ludus-ad-content
+        depends_on:
+          - vm_name: "{{ range_id }}-SALESDC"
+            role: ludus_child_domain
     role_vars:
       parent_domain_name: "mineral.local"
       new_domain_name: "sales"
