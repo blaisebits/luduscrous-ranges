@@ -87,11 +87,7 @@ ludus:
     windows:
       sysprep: true
     roles:
-      # - ludus_child_domain
-      - name: ludus_child_domain
-        depends_on:
-          - vm_name: "{{ range_id }}-PRIMARYDC"
-            role: ludus-ad-content
+      - ludus_child_domain
       - ludus-ad-content
     role_vars:
       parent_domain_name: "mineral.local"
