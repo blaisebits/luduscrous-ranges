@@ -1,0 +1,29 @@
+ludus:
+  - vm_name: "{{ range_id }}-win10-attackbox"
+    hostname: "attackbox"
+    template: commando-vm-win10-template
+    vlan: 10
+    ip_last_octet: 20
+    ram_gb: 16
+    cpus: 4
+    windows:
+      sysprep: false
+      install_additional_tools: true
+      office_version: 2019
+      office_arch: 64bit
+      visual_studio_version: 2019
+      chocolatey_ignore_checksums: false
+      chocolatey_packages:
+        - proxifier
+        - openvpn
+  - vm_name: "{{ range_id }}-kali"
+    hostname: "{{ range_id }}-kali"
+    template: kali-x64-desktop-template
+    vlan: 99
+    ip_last_octet: 10
+    ram_gb: 16
+    cpus: 4
+    linux: true
+    testing:
+      snapshot: false
+      block_internet: false
