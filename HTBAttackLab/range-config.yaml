@@ -1,7 +1,125 @@
 ludus:
+  - vm_name: "{{ range_id }}-kali"
+    hostname: "{{ range_id }}-kali"
+    template: kali-x64-desktop-template
+    vlan: 10
+    ip_last_octet: 10
+    ram_gb: 16
+    cpus: 4
+    linux: true
+    testing:
+      snapshot: false
+      block_internet: false
+    roles:
+      - xbufu.kali
+    role_vars:
+      kali_enable_bash: false
+      kali_enable_rdp: false
+      kali_base_packages:
+        - autogen
+        - automake
+        - acl
+        - apache2
+        - build-essential
+        - cifs-utils
+        - curl
+        - dkms
+        - eog
+        - exploitdb
+        - flameshot
+        - gcc-multilib
+        - gcc-mingw-w64-x86-64-win32
+        - gdb
+        - git
+        - gnupg
+        - golang
+        - gparted
+        - htop
+        - openjdk-17-jdk
+        - openjdk-17-jre
+        - openjdk-17-dbg
+        - openjdk-17-doc
+        - jq
+        - kali-root-login
+        - libffi-dev
+        - libguestfs-tools
+        - libmpc-dev
+        - libssl-dev
+        - manpages-dev
+        - manpages-posix-dev
+        - masscan
+        - nfs-common
+        - nmap
+        - neovim
+        - openssl
+        - plocate
+        - proxychains
+        - python2
+        - python2-dev
+        - python3-argcomplete
+        - python3-dev
+        - python3-distutils
+        - python3-setuptools
+        - python3-venv
+        - rdesktop
+        - samba
+        - seclists
+        - socat
+        - sqlite3
+        - sqlitebrowser
+        - tmux
+        - vim
+        - wget
+        - wireshark
+        - xclip
+        - xpdf
+        - xxd
+        - freerdp2-x11
+      kali_tool_packages:
+        - amass
+        - binwalk
+        - burpsuite
+        - certipy-ad
+        - cewl
+        - crunch
+        - dnsenum
+        - dnsrecon
+        - dos2unix
+        - enum4linux
+        - exe2hexbat
+        - exiftool
+        - ffuf
+        - ghex
+        - gpp-decrypt
+        - hashcat
+        - hashcat-utils
+        - hydra
+        - impacket-scripts
+        - john
+        - metasploit-framework
+        - nbtscan
+        - onesixtyone
+        - oscanner
+        - passing-the-hash
+        - peass
+        - python3-impacket
+        - python3-ldapdomaindump
+        - recon-ng
+        - responder
+        - smbclient
+        - smbmap
+        - smtp-user-enum
+        - snmpcheck
+        - sqlmap
+        - ssldump
+        - sslscan
+        - sslsplit
+        - sslyze
+        - wordlists
+        - wpscan
   - vm_name: "{{ range_id }}-win10-attackbox"
     hostname: "attackbox"
-    template: commando-vm-win10-template
+    template: win10-21h2-x64-enterprise-template
     vlan: 10
     ip_last_octet: 20
     ram_gb: 16
@@ -16,14 +134,3 @@ ludus:
       chocolatey_packages:
         - proxifier
         - openvpn
-  - vm_name: "{{ range_id }}-kali"
-    hostname: "{{ range_id }}-kali"
-    template: kali-x64-desktop-template
-    vlan: 99
-    ip_last_octet: 10
-    ram_gb: 16
-    cpus: 4
-    linux: true
-    testing:
-      snapshot: false
-      block_internet: false
