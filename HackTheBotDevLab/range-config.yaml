@@ -1,67 +1,67 @@
 ludus:
-  - vm_name: "{{ range_id }}-kali"
-      hostname: "{{ range_id }}-kali"
-      template: kali-x64-desktop-template
-      vlan: 10
-      ip_last_octet: 10
-      ram_gb: 16
-      cpus: 4
-      linux: true
-      testing:
-        snapshot: false
-        block_internet: false
+- vm_name: "{{ range_id }}-kali"
+  hostname: "{{ range_id }}-kali"
+  template: kali-x64-desktop-template
+  vlan: 10
+  ip_last_octet: 10
+  ram_gb: 16
+  cpus: 4
+  linux: true
+  testing:
+    snapshot: false
+    block_internet: false
 - vm_name: "{{ range_id }}-dev"
-    hostname: "{{ range_id }}-dev"
-    template: debian-12-x64-server-template
-    vlan: 100
-    ip_last_octet: 20
-    ram_gb: 16
-    cpus: 4
-    linux: true
-    testing:
-      snapshot: false
-      block_internet: false
-    roles:
-      - geerlingguy.docker
-      - webofmars.xfce4-desktop
-      - Oefenweb.pycharm
-      - bartdorlandt.poetry
-    role_vars:
-      docker_edition: ce
-      docker_users:
-        - debian
-      pycharm_version: 2024.3.1.1
+  hostname: "{{ range_id }}-dev"
+  template: debian-12-x64-server-template
+  vlan: 100
+  ip_last_octet: 20
+  ram_gb: 16
+  cpus: 4
+  linux: true
+  testing:
+    snapshot: false
+    block_internet: false
+  roles:
+    - geerlingguy.docker
+    - webofmars.xfce4-desktop
+    - Oefenweb.pycharm
+    - bartdorlandt.poetry
+  role_vars:
+    docker_edition: ce
+    docker_users:
+      - debian
+    pycharm_version: 2024.3.1.1
 - vm_name: "{{ range_id }}-robopages"
-    hostname: "{{ range_id }}-robopages"
-    template: debian-12-x64-server-template
-    vlan: 100
-    ip_last_octet: 30
-    ram_gb: 16
-    cpus: 4
-    linux: true
-    testing:
-      snapshot: false
-      block_internet: false
-    roles:
-      - geerlingguy.docker
-    role_vars:
-      docker_edition: ce
-      docker_users:
-        - debian
-  - vm_name: "{{ range_id }}-win10-attackbox"
-      hostname: "attackbox"
-      template: win10-21h2-x64-enterprise-template
-      vlan: 10
-      ip_last_octet: 40
-      ram_gb: 16
-      cpus: 4
-      windows:
-        sysprep: false
-        install_additional_tools: true
-        office_version: 2019
-        office_arch: 64bit
-        visual_studio_version: 2019
-        chocolatey_ignore_checksums: false
-        chocolatey_packages:
-          - proxifier
-          - openvpn
+  hostname: "{{ range_id }}-robopages"
+  template: debian-12-x64-server-template
+  vlan: 100
+  ip_last_octet: 30
+  ram_gb: 16
+  cpus: 4
+  linux: true
+  testing:
+    snapshot: false
+    block_internet: false
+  roles:
+    - geerlingguy.docker
+  role_vars:
+    docker_edition: ce
+    docker_users:
+      - debian
+- vm_name: "{{ range_id }}-win10-attackbox"
+  hostname: "attackbox"
+  template: win10-21h2-x64-enterprise-template
+  vlan: 10
+  ip_last_octet: 40
+  ram_gb: 16
+  cpus: 4
+  windows:
+    sysprep: false
+    install_additional_tools: true
+    office_version: 2019
+    office_arch: 64bit
+    visual_studio_version: 2019
+    chocolatey_ignore_checksums: false
+    chocolatey_packages:
+      - proxifier
+      - openvpn
