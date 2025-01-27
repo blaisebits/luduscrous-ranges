@@ -35,7 +35,7 @@ ludus:
     vnc_desktop: xfce4
     vnc_server_options: -geometry 1680x1050 -localhost
     vnc_config_options:
-      - geometry=1920x1200
+      - geometry=1680x1050
       - localhost
     vnc_install_systemd_services: true
     vnc_users:
