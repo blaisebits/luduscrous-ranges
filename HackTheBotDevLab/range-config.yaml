@@ -13,7 +13,7 @@ ludus:
 - vm_name: "{{ range_id }}-dev"
   hostname: "{{ range_id }}-dev"
   template: debian-12-x64-server-template
-  vlan: 100
+  vlan: 10
   ip_last_octet: 20
   ram_gb: 16
   cpus: 4
@@ -34,7 +34,7 @@ ludus:
 - vm_name: "{{ range_id }}-robopages"
   hostname: "{{ range_id }}-robopages"
   template: debian-12-x64-server-template
-  vlan: 100
+  vlan: 10
   ip_last_octet: 30
   ram_gb: 16
   cpus: 4
