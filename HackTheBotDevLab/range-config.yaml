@@ -26,11 +26,22 @@ ludus:
     - webofmars.xfce4-desktop
     - Oefenweb.pycharm
     - bartdorlandt.poetry
+    - sdarwin.vnc
   role_vars:
+    pycharm_version: 2024.3.1.1
     docker_edition: ce
     docker_users:
       - debian
-    pycharm_version: 2024.3.1.1
+    vnc_desktop: xfce4
+    vnc_server_options: -geometry 1680x1050 -localhost
+    vnc_config_options:
+      - geometry=1920x1200
+      - localhost
+    vnc_install_systemd_services: true
+    vnc_users:
+      - username: 'debian'
+        vnc_num: 1 #port 5901 is 1
+        vnc_default_password: password
 - vm_name: "{{ range_id }}-robopages"
   hostname: "{{ range_id }}-robopages"
   template: debian-12-x64-server-template
